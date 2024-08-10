@@ -7,16 +7,14 @@ import streamlit as st
 import os
 import google.generativeai as genai
 
-# Load environment variables from .env file
+
 load_dotenv()
 
-# Load the pickled model
 def load_pickled_model():
     with open('model.pkl', 'rb') as file:
         model = pickle.load(file)
     return model
 
-# Load the pickled model
 model = load_pickled_model()
 
 def get_gemini_response(input_text, pdf_content, prompt):
@@ -42,7 +40,7 @@ def input_pdf_setup(uploaded_file):
     else:
         raise FileNotFoundError("No file uploaded")
 
-# Streamlit app configuration
+
 st.set_page_config(page_title="ATS Resume Analyzer", layout="wide")
 st.title("ATS Resume Analyzer")
 
@@ -52,7 +50,6 @@ st.markdown("""
     Follow the instructions below to get started:
 """)
 
-# Create a form for input fields
 with st.form(key="input_form"):
     st.markdown("### 1. Enter Job Description")
     input_text = st.text_area("Job Description", 
@@ -73,7 +70,7 @@ with st.form(key="input_form"):
     with col3:
         submit3 = st.form_submit_button("ATS Match Percentage")
 
-# Define refined prompts for different tasks
+
 input_prompt1 = """You are an experienced Technical HR Manager with deep knowledge in Data Science, Full Stack Development, Big Data Engineering, DevOps, and Data Analysis. 
                       Your task is to evaluate the provided resume against the given job description. 
                       Analyze the resume for the following criteria:
@@ -96,7 +93,6 @@ input_prompt3 = """You are an ATS expert with comprehensive knowledge of Data Sc
                       3. **Final Evaluation**: Offer a summary of how the resume compares to the job description, including any major discrepancies or areas for improvement.
                       Ensure your analysis is detailed and provides actionable insights for enhancing the resume's compatibility with the job requirements."""
 
-# Handling button clicks and processing the resume
 if submit1 or submit2 or submit3:
     if uploaded_file is not None:
         pdf_content = input_pdf_setup(uploaded_file)
